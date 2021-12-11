@@ -1,0 +1,127 @@
+Hive+SparkSql：
+
+DROP TABLE IF EXISTS zhixue_.xlyao3_tmp_data_1;
+CREATE TABLE IF NOT EXISTS zhixue_.xlyao3_tmp_data_1 
+
+select distinct *
+from
+where
+group by
+having
+order by 
+
+ROW_NUMBER()/RANK()/DENSE_RANK() OVER (PARTITION BY ... ORDER BY ...) ...
+
+left join / join () a2 on a1. = a2. where...
+
+union / union all
+
+count(distinct if( , , ))
+if(t1.score='bg-1','',t1.score)
+
+round(,4)
+
+nvl(expr1,expr2)
+
+CAST( string AS double)
+
+concat_ws(' ',)
+concat()
+collect_list() 列转行 （可突破group by限制）
+collect_set()  列转行去重
+
+【collect_list+窗口函数】
+  collect_list(exercise_ranks) over(partition by knowledge_name,from_user_id order by create_time range between unbounded preceding and unbounded following) as exercise_ranks_list,
+  collect_list(if(, '对', '错')) over(partition by knowledge_name,from_user_id order by create_time  range between unbounded preceding and unbounded following) as exercise_right_list,
+  last(`exercise_ranks`) over(partition by knowledge_name,from_user_id order by create_time  range between unbounded preceding and unbounded following) as last_ranks,
+  last(if(, '对', '错'))over(partition by knowledge_name, from_user_id order by create_time  range between unbounded preceding and unbounded following) as last_exercise_right,
+
+part = date_sub(from_unixtime(unix_timestamp(), 'yyyy-MM-dd'), 1) 
+part = '${hivevar:CALC_DATE}'
+
+to_date(begin_time) >=
+
+lesson_name like '%AI%'
+lesson_name in ()
+
+case
+  when ... then 1
+  when ... then 2
+  when ... then 3
+  when ... then 4
+  else 5
+end
+
+split(substring_index(substring_index(event_data, '[{', -1), '}]', 1),'\\}\\,\\{')[0] as a,
+split(substring_index(substring_index(event_data, '[{', -1), '}]', 1),'\\}\\,\\{')[1] as b,
+get_json_object(substring(resources,2,length(resources)-2),'$.sourceUrl') as Url
+
+--explode将hive一行中复杂的array或者map结构拆分成多行
+LATERAL VIEW explode(SPLIT(share_user_id, ',')) adTable AS share_user_ids
+
+nvl(get_json_object(expand_information, '$.book_code'),'未知') as book_code,
+get_json_object(expand_information, '$.topic_id') as topic_id,
+
+regexp_replace(action, 'labelFields\.isHomeworkSelectedRes', 'isHomeworkSelectedRes') --支持正则表达式
+replace(action, 'labelFields\.isHomeworkSelectedRes', 'isHomeworkSelectedRes')
+
+--使用jar包
+create temporary function doEncrypt as 'com.iflytek.edu.bigdata.UDF.UDFEncrypt' 
+using jar 'hdfs://ns-bj//project/edu_bg/edu_bg/job/util/EDU-bigdata-udf-jar-with-dependencies.jar';
+
+--检查school_id是否为主键
+select school_id,count(1) from edu_dop.  group by school_id having count(1) > 1
+
+数仓架构：
+ODB底层表
+DW表（after cleaning，初关联）
+DWS表（data warehouse service）
+SH表（业务线）
+
+类型分类（按分区区分）：
+离线表
+每日全量表：part=
+按日增量表：part>='2021-05-20'
+按月增量表：part>='2021-05'
+
+实时表
+准实时，真实时
+
+
+drop table if exists zhixue_._;
+create external table if not exists zhixue_._ (
+-- 课程信息
+course_id                            string       COMMENT  '课程ID',
+course_name                          string       COMMENT  '课程名称',
+
+  )
+PARTITIONED BY (`part` string)   
+STORED AS PARQUET LOCATION '/project/zhixue_pro/zhixue_pro/db/sh_dv_ai_learning_user_lesson_fact';
+alter table zhixue_pro.sh_dv_ai_learning_user_lesson_fact drop if exists partition(part='${hivevar:CALC_DATE}');
+alter table zhixue_pro.sh_dv_ai_learning_user_lesson_fact add if not exists partition(part='${hivevar:CALC_DATE}');
+INSERT OVERWRITE TABLE zhixue_pro.sh_dv_ai_learning_user_lesson_fact PARTITION (part = '${hivevar:CALC_DATE}')
+
+
+[	--导入数据
+drop table if exists `zhixue_bi.xlyao3_tmp_test`;
+create external table if not exists `zhixue_bi.xlyao3_tmp_test` (
+    
+  )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n'
+STORED AS textfile LOCATION '/project/zhixue_bi/xlyao3/db/xlyao3_tmp_test';
+
+
+
+--取数
+DROP TABLE IF EXISTS zhixue_bi.xlyao3_tmp_data_1;
+CREATE TABLE IF NOT EXISTS zhixue_bi.xlyao3_tmp_data_1 
+
+SET spark.sql.shuffle.partitions = 1;
+DROP TABLE IF EXISTS zhixue_bi.xlyao3_tmp_data;
+CREATE TABLE IF NOT EXISTS zhixue_bi.xlyao3_tmp_data 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' 
+LINES TERMINATED BY '\n' 
+STORED AS TEXTFILE LOCATION '/project/zhixue_bi/xlyao3/db/xlyao3_tmp_data'
+SELECT	*
+FROM  zhixue_bi.xlyao3_tmp_data_1
+distribute BY rand()	]
