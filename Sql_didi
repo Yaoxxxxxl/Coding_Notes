@@ -1,0 +1,20 @@
+正则表达式，regexp_extract(str , regexp , idx)
+
+- SQL Tips
+    - 语言技能不过关就自己Google，自己补课，自己找问题，自己找解决方法，好好利用系统报错。
+    - SQL重要的是**对于实现提取目标的构思**，先把框架，逻辑，结构想清楚，再写脚本。（改别人的脚本同理）
+    - 尽量写得工整有条理，你开心别人也开心。
+    - 少嵌套，少嵌套，少嵌套。
+    - 无比注意**时间，分区**的选择。
+    - 多关注 **where中的筛选条件** 和 **on中的关联条件**。
+    
+- 指标分类
+    - Supply & Demand：例如CR, TSH, ECR, AR, Broadcast Rate 等订单层面汇总的数据
+    - Passenger Acquisition：主要是与 PFT 相关指标
+    - Driver Acquisition：主要是与 DFT 相关指标
+    - Passenger Engagement： 例如Online driver, Active driver, TSH, Occupancy Rate, Charging Distance, Charging Duration, Retention Rate 等相关指标
+    - Driver Engagement：例如Eyeball, Call, Ride, Retention Rate 等相关指标
+    - Experience： 例如ETA, EDA, ADA 等相关指标
+    - Passenger Finance：例如ASP, Pax Burn Rate, Pax Engagement Burn, Pax Acquisition Burn 等相关指标
+    - Driver Finance：例如Driver Income, Trip Income, Driver Engagement Burn, Driver Acquisition Burn, Driver Burn Rate, ASP 等相关指标
+    - Platform Finance：例如 GMV, Platform TR, Total Burn 等相关指标
