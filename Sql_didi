@@ -18,3 +18,11 @@
     - Passenger Finance：例如ASP, Pax Burn Rate, Pax Engagement Burn, Pax Acquisition Burn 等相关指标
     - Driver Finance：例如Driver Income, Trip Income, Driver Engagement Burn, Driver Acquisition Burn, Driver Burn Rate, ASP 等相关指标
     - Platform Finance：例如 GMV, Platform TR, Total Burn 等相关指标
+
+The hive table end with	Explanation in Chinese	Explanation in English
+his	历史累计	 Historical accumulative
+df	天级全量	 Daily full
+di	天级增量	 Daily increasement
+hf	小时级全量	 Hourly full
+hi	小时级增量	 Hourly increment
+hd	小时级处理近23小时的数据	
